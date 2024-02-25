@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+    
+    environment {
+        MAVEN_HOME = tool 'Maven3.8.4'
+        TOMCAT_SERVER = 'localhost:8080'  // Adjust this based on your Tomcat server details
+        TOMCAT_USERNAME = 'your_username'
+        TOMCAT_PASSWORD = 'your_password'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh "${MAVEN_HOME}/bin/mvn clean install"
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh "${MAVEN_HOME}/bin/mvn test"
+            }
+        }
+
+        stage('Package') {
+            steps {
+                sh "${MAVEN_HOME}/bin/mvn package"
+            }
+        }
+
+        stage('Deploy to Tomcat') {
+            steps {
+                script {
+                    def warFile = sh(script: 'ls target/*.war', returnStdout: true).trim()
+
+                    // Deploy to Tomcat using the tomcat-maven-plugin
+                    sh "${MAVEN_HOME}/bin/mvn tomcat:deploy -Dmaven.tomcat.url=http://${TOMCAT_USERNAME}:${TOMCAT_PASSWORD}@${TOMCAT_SERVER}/manager/text -Dmaven.tomcat.path=/your-app -Dmaven.tomcat.warFile=${warFile}"
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Build, test, and deployment successful!"
+        }
+
+        failure {
+            echo "Build or deployment failed!"
+        }
+    }
+}
