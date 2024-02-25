@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+    
+    environment {
+        // Define environment variables if needed
+        MAVEN_HOME = tool 'Maven3.8.4'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout source code from your version control system (e.g., Git)
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Build the Maven project
+                sh "${MAVEN_HOME}/bin/mvn clean install"
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Run tests
+                sh "${MAVEN_HOME}/bin/mvn test"
+            }
+        }
+
+        stage('Package') {
+            steps {
+                // Package the application (e.g., create JAR or WAR file)
+                sh "${MAVEN_HOME}/bin/mvn package"
+            }
+        }
+    }
+
+    post {
+        success {
+            // Add post-build actions on success
+            echo "Build successful!"
+        }
+
+        failure {
+            // Add post-build actions on failure
+            echo "Build failed!"
+        }
+    }
+}
