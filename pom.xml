@@ -38,15 +38,15 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!-- Add the following Maven War Plugin configuration -->
-				<configuration>
-                			<packagingExcludes>
-                    				WEB-INF/lib/tomcat-*.jar
-                			</packagingExcludes>
-            			</configuration>
+    				<groupId>org.springframework.boot</groupId>
+    				<artifactId>spring-boot-maven-plugin</artifactId>
+    				<configuration>
+        				<packagingExcludes>
+           					WEB-INF/lib/tomcat-*.jar
+        				</packagingExcludes>
+    				</configuration>
 			</plugin>
+
 			<!-- Add the Maven War Plugin -->
 			<plugin>
             			<groupId>org.apache.maven.plugins</groupId>
