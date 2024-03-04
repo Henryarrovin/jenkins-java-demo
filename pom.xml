@@ -36,24 +36,25 @@
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-    				<groupId>org.springframework.boot</groupId>
-    				<artifactId>spring-boot-maven-plugin</artifactId>
-    				<configuration>
-        				<packagingExcludes>
-           					WEB-INF/lib/tomcat-*.jar
-        				</packagingExcludes>
-    				</configuration>
-			</plugin>
+    	<plugins>
+        		<plugin>
+            			<groupId>org.springframework.boot</groupId>
+            			<artifactId>spring-boot-maven-plugin</artifactId>
+            			<configuration>
+                			<packagingExcludes>
+                    				WEB-INF/lib/tomcat-*.jar
+                			</packagingExcludes>
+            			</configuration>
+        	</plugin>
 
-			<!-- Add the Maven War Plugin -->
-			<plugin>
-            			<groupId>org.apache.maven.plugins</groupId>
-            			<artifactId>maven-war-plugin</artifactId>
-            			<version>3.3.1</version>
-        		</plugin>
-		</plugins>
+        	<!-- Add the Maven War Plugin -->
+        	<plugin>
+            		<groupId>org.apache.maven.plugins</groupId>
+            		<artifactId>maven-war-plugin</artifactId>
+            		<version>3.3.1</version>
+        	</plugin>
+    	</plugins>
 	</build>
+
 
 </project>
